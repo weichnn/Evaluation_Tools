@@ -1,9 +1,9 @@
-function [rmse, RE, tE, scaleE] = efficientEvalDrift( benchmark, mocapRaw )
+function [rmse, RE, tE, scaleE] = simpleexample( benchmark, mocapRaw )
 % benchmark: path to the file waiting for evaluating, mocapRaw: groundtruth
 
 lsdOpt = importdata([benchmark]);
 
-[ gtPos,lsdOpt ] = assiciate( mocapRaw(:,1), mocapRaw, lsdOpt );
+[ gtPos,lsdOpt ] = associate( mocapRaw(:,1), mocapRaw, lsdOpt );
 
 if(size(lsdOpt,1)==0)
     ['NO DATAA ' sequencename]

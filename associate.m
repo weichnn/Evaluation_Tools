@@ -1,4 +1,4 @@
- function [lsdPos,gtwithTime ] = assiciate( lsdTme,lsdPos,mocapRaw )
+ function [lsdPos,gtwithTime ] = associate( lsdTme,lsdPos,mocapRaw )
 % the timestamp of mocapRaw should be more dense than lsdPos 
 
     gtPos = zeros(size(lsdTme,1),3);
