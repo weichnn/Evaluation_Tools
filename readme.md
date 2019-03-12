@@ -1,6 +1,6 @@
 # Evaluation Tools
 
-These tools are based on DSO work for motion estimation or SLAM work.
+These matlab and python tools have motion estimation function for visual odometry or SLAM works.
 
 * associate: to associate timestamp between two file
 * AlignSimEfficient: to compute the a sim(3) to get rmse
