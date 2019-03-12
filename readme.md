@@ -1,6 +1,6 @@
 # Evaluation Tools
 
-This tool is built from the dso work.
+These tools are based on DSO work for motion estimation or SLAM work.
 
 * associate: to associate timestamp between two file
 * AlignSimEfficient: to compute the a sim(3) to get rmse
