@@ -17,7 +17,7 @@ More details about ATE and RPE can be found in this [paper](https://ieeexplore.i
 sudo apt-get install python-argparse
 ```
 
-### Matlab
+### Matlab (Optioanl)
 
 Get MATLAB in <https://www.mathworks.com/products/matlab.html>
 
@@ -45,21 +45,73 @@ The file format of the ground-truth and estimated poses are specified.
 
 ### Evaluation
 
-#### Evaluating trajectories with metric scale
+#### Evaluate trajectories with metric scale
 
 - evalute_ate.py
     - This script computes the absolute trajectory error from the ground truth trajectory and the estimated trajectory. 
+    - --offset OFFSET: time offset added to the timestamps of the second file (default: 0.0)
+    - --scale SCALE: scaling factor for the second trajectory (default: 1.0)
+    - --max_difference MAX_DIFFERENCE: maximally allowed time difference for matching entries (default: 0.02)
+    - --save: save aligned second trajectory to disk (format: stamp2 x2 y2 z2)
+    - --save_associations SAVE_ASSOCIATIONS: save associated first and aligned second trajectory to disk (format: stamp1 x1 y1 z1 stamp2 x2 y2 z2)
+    - --plot PLOT: plot the first and the aligned second trajectory to an image (format: png)
+    - --verbose: print all evaluation data (otherwise, only the RMSE absolute translational error in meters after alignment will be printed)
+
+    ``` shell
+    usage: evaluate_ate.py [-h] [--offset OFFSET] [--scale SCALE]
+                       [--max_difference MAX_DIFFERENCE] [--save SAVE]
+                       [--save_associations SAVE_ASSOCIATIONS] [--plot PLOT]
+                       [--verbose]
+                       first_file second_file
+    ```
+
 - evaluate_rpe.py
     - This script computes the relative pose error from the ground truth trajectory and the estimated trajectory. 
+    - --max_pairs MAX_PAIRS: maximum number of pose comparisons (default: 10000, set to zero to disable downsampling
+    - --fixed_delta: only consider pose pairs that have a distance of delta delta_unit (e.g., for evaluating the drift per second/meter/radian)
+    - --delta DELTA: delta for evaluation (default: 1.0)
+    - --scale SCALE: unit of delta (options: \'s\' for seconds, \'m\' for meters, \'rad\' for radians, \'f\' for frames; default: \'s\'
+    - --offset OFFSET: time offset between ground-truth and estimated trajectory (default: 0.0)
+    - --scale SCALE: scaling factor for the estimated trajectory (default: 1.0)
+    - --save SAVE: text file to which the evaluation will be saved (format: stamp_est0 stamp_est1 stamp_gt0 stamp_gt1 trans_error rot_error)
+    - --plot PLOT: plot the result to a file (requires --fixed_delta, output format: png)
+    - --verbose: print all evaluation data (otherwise, only the mean translational error measured in meters will be printed)
 
-#### Evaluating trajectories with a unkonwn scale. E.g., the results from mono VO/SLAM
+    ``` shell
+    usage: evaluate_rpe.py [-h] [--max_pairs MAX_PAIRS] [--fixed_delta]
+                       [--delta DELTA] [--delta_unit DELTA_UNIT]
+                       [--offset OFFSET] [--scale SCALE] [--save SAVE]
+                       [--plot PLOT] [--verbose]
+                       groundtruth_file estimated_file
+    ```
+
+#### Evaluate trajectories with a unkonwn scale. E.g., the results from mono VO/SLAM
 
 - evalute_ate_scale.py
     - This script computes the absolute trajectory error from the ground truth trajectory and the estimated trajectory. 
+    - --offset OFFSET: time offset added to the timestamps of the second file (default: 0.0)
+    - --max_difference MAX_DIFFERENCE: maximally allowed time difference for matching entries (default: 0.02)
+    - --save: save aligned second trajectory to disk (format: stamp2 x2 y2 z2)
+    - --save_associations SAVE_ASSOCIATIONS: save associated first and aligned second trajectory to disk (format: stamp1 x1 y1 z1 stamp2 x2 y2 z2)
+    - --plot PLOT: plot the first and the aligned second trajectory to an image (format: png)
+    - --verbose: print all evaluation data (otherwise, only the RMSE absolute translational error in meters after alignment will be printed)
+
+    ``` shell
+    usage: evaluate_ate_scale.py [-h] [--offset OFFSET]
+                                [--max_difference MAX_DIFFERENCE] [--save SAVE]
+                                [--save_associations SAVE_ASSOCIATIONS]
+                                [--plot PLOT] [--verbose]
+                                first_file second_file
+    ```
+
 - AlignSimEfficient: 
     - The function of this script is the same as above, aligning trajectory with a sim(3) to compute ATE RMSE.
 
-#### Evaluaing trajectories for Kitti
+    ``` matlab
+    [ rmse, RE, tE, scaleE ] = AlignSimEfficient( gtPos(:,2:4), traj(:,2:4) );
+    ```
+
+#### Evaluate trajectories for Kitti
 
 [Lean More](Kitti-devkit/readme.txt)
 
