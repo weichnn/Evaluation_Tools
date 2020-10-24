@@ -21,7 +21,7 @@ sudo apt-get install python-argparse
 
 Get MATLAB in <https://www.mathworks.com/products/matlab.html>
 
-### C++ (gcc) for Kitti
+### C++ (g++) for Kitti
 
 ``` shell
 g++ -O3 -DNDEBUG -o evaluate_odometry evaluate_odometry.cpp matrix.cpp
